@@ -13,7 +13,7 @@ fetchBreeds().then(data => {
     breedSelector.style.display = "block";
 
     for (let i = 0; i < data.length; i += 1) {
-        breedData = data[i];
+        const breedData = data[i];
 
         const option = document.createElement("option");
         option.value = breedData.id;
