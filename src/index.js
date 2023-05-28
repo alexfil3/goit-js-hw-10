@@ -11,22 +11,18 @@ const loader = document.querySelector('.loader');
 fetchBreeds().then(data => {
     loader.style.display = "none";
     breedSelector.style.display = "block";
-
-    for (let i = 0; i < data.length; i += 1) {
-        const breedData = data[i];
-
-        const option = document.createElement("option");
-        option.value = breedData.id;
-        option.textContent = breedData.name;
-        breedSelector.appendChild(option);
-    }
+    const breeds = data.map(({ id, name }) => `<option value="${id}">${name}</option>`).join('');
+    breedSelector.insertAdjacentHTML('beforeend', breeds);
 }).catch(err => console.log(err));
 
 breedSelector.addEventListener('change', (e) => {
     const breedId = e.target.value;
+    loader.style.display = "block";
+    catInfo.style.display = "none";
     
     fetchCatByBreed(breedId).then(data => {
         catInfo.style.display = "flex";
+        loader.style.display = "none";
         const breed = data[0];
         
         img.src = data[0].url;
